@@ -75,9 +75,6 @@ var app = (function () {
     function children(element) {
         return Array.from(element.childNodes);
     }
-    function set_input_value(input, value) {
-        input.value = value == null ? '' : value;
-    }
     function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
         const e = document.createEvent('CustomEvent');
         e.initCustomEvent(type, bubbles, cancelable, detail);
@@ -427,13 +424,11 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[3] = list[i];
-    	child_ctx[4] = list;
-    	child_ctx[5] = i;
+    	child_ctx[2] = list[i];
     	return child_ctx;
     }
 
-    // (32:0) {:else}
+    // (33:0) {:else}
     function create_else_block(ctx) {
     	let ul;
     	let each_value = /*tasks*/ ctx[0];
@@ -453,7 +448,7 @@ var app = (function () {
     			}
 
     			attr_dev(ul, "class", "svelte-1d2rm3n");
-    			add_location(ul, file$1, 32, 2, 580);
+    			add_location(ul, file$1, 33, 2, 581);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, ul, anchor);
@@ -497,14 +492,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(32:0) {:else}",
+    		source: "(33:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (30:0) {#if tasks.length === 0}
+    // (31:0) {#if tasks.length === 0}
     function create_if_block(ctx) {
     	let p;
 
@@ -512,7 +507,7 @@ var app = (function () {
     		c: function create() {
     			p = element("p");
     			p.textContent = "This wish list is empty";
-    			add_location(p, file$1, 30, 2, 539);
+    			add_location(p, file$1, 31, 2, 540);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -527,73 +522,62 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(30:0) {#if tasks.length === 0}",
+    		source: "(31:0) {#if tasks.length === 0}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (34:4) {#each tasks as task}
+    // (35:4) {#each tasks as task}
     function create_each_block(ctx) {
     	let li;
-    	let input;
-    	let t0;
     	let button;
+    	let t0_value = /*task*/ ctx[2].japanese + "";
+    	let t0;
+    	let t1;
+    	let t2_value = /*task*/ ctx[2].dutch + "";
     	let t2;
+    	let t3;
     	let mounted;
     	let dispose;
 
-    	function input_input_handler() {
-    		/*input_input_handler*/ ctx[1].call(input, /*each_value*/ ctx[4], /*task_index*/ ctx[5]);
-    	}
-
     	function click_handler() {
-    		return /*click_handler*/ ctx[2](/*task*/ ctx[3]);
+    		return /*click_handler*/ ctx[1](/*task*/ ctx[2]);
     	}
 
     	const block = {
     		c: function create() {
     			li = element("li");
-    			input = element("input");
-    			t0 = space();
     			button = element("button");
-    			button.textContent = "translate";
-    			t2 = space();
-    			add_location(input, file$1, 35, 8, 630);
+    			t0 = text(t0_value);
+    			t1 = text(" | ");
+    			t2 = text(t2_value);
+    			t3 = space();
     			attr_dev(button, "class", "description svelte-1d2rm3n");
-    			attr_dev(button, "type", "text");
-    			add_location(button, file$1, 36, 8, 673);
-    			add_location(li, file$1, 34, 6, 617);
+    			add_location(button, file$1, 36, 8, 631);
+    			add_location(li, file$1, 35, 6, 618);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
-    			append_dev(li, input);
-    			set_input_value(input, /*task*/ ctx[3].active);
-    			append_dev(li, t0);
     			append_dev(li, button);
-    			append_dev(li, t2);
+    			append_dev(button, t0);
+    			append_dev(button, t1);
+    			append_dev(button, t2);
+    			append_dev(li, t3);
 
     			if (!mounted) {
-    				dispose = [
-    					listen_dev(input, "input", input_input_handler),
-    					listen_dev(button, "click", click_handler, false, false, false)
-    				];
-
+    				dispose = listen_dev(button, "click", click_handler, false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
-
-    			if (dirty & /*tasks*/ 1 && input.value !== /*task*/ ctx[3].active) {
-    				set_input_value(input, /*task*/ ctx[3].active);
-    			}
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(li);
     			mounted = false;
-    			run_all(dispose);
+    			dispose();
     		}
     	};
 
@@ -601,7 +585,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(34:4) {#each tasks as task}",
+    		source: "(35:4) {#each tasks as task}",
     		ctx
     	});
 
@@ -632,17 +616,7 @@ var app = (function () {
     			insert_dev(target, if_block_anchor, anchor);
     		},
     		p: function update(ctx, [dirty]) {
-    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
-    				if_block.p(ctx, dirty);
-    			} else {
-    				if_block.d(1);
-    				if_block = current_block_type(ctx);
-
-    				if (if_block) {
-    					if_block.c();
-    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
-    				}
-    			}
+    			if_block.p(ctx, dirty);
     		},
     		i: noop,
     		o: noop,
@@ -683,11 +657,6 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<TaskList> was created with unknown prop '${key}'`);
     	});
 
-    	function input_input_handler(each_value, task_index) {
-    		each_value[task_index].active = this.value;
-    		$$invalidate(0, tasks);
-    	}
-
     	const click_handler = task => switchLanguage(task);
     	$$self.$capture_state = () => ({ Task, tasks, switchLanguage });
 
@@ -699,7 +668,7 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [tasks, input_input_handler, click_handler];
+    	return [tasks, click_handler];
     }
 
     class TaskList extends SvelteComponentDev {

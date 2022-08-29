@@ -8,7 +8,7 @@
   ];
 
   function switchLanguage(task){
-    task.active = task.dutch;
+    task.translate()
   }
 </script>
 
@@ -33,7 +33,8 @@
   <ul>
     {#each tasks as task}
       <li>
-        <button on:click={() => switchLanguage(task)} class="description" type="text" >{task.active}</button>
+        <input bind:value={task.active} />
+        <button on:click={() => switchLanguage(task)} class="description" type="text" >translate</button>
       </li>
     {/each}
   </ul>

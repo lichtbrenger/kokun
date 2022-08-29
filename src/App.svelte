@@ -5,11 +5,18 @@
 
 <main>
   <h1>{title}</h1>
-  <TaskList />
-  <img src="images/roodborstje.png" alt="background image" />
+  <div class="flexcontainer">
+    <img src="images/roodborstje.png" alt="background image" />
+    <TaskList />
+  </div>
 </main>
 
 <style>
+  .flexcontainer {
+    display: flex;
+    align-items: center;
+    margin-left: 500px;
+  }
 	main {
 		text-align: center;
 		padding: 1em;

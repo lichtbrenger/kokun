@@ -4,7 +4,11 @@
   import {tasks} from './Tasks.js'
 
   function switchLanguage(task){
-    task.translate()
+    task.translate();
+  }
+
+  function reserveItem(task) {
+    task.reserved = !task.reserved;
   }
 
 </script>
@@ -13,14 +17,20 @@
   ul {
     list-style: none;
   }
-  .category {
+  .available {
     background-color: #ffffff;
     min-width: 400px;
     border-radius: 12px;
   }
-  .category:hover {
+  .available:hover {
     background-color: #ed2939;
     color: white;
+  }
+
+  .reserved {
+    background-color: #000000;
+    min-width: 400px;
+    border-radius: 12px;
   }
 </style>
 
@@ -30,7 +40,7 @@
   <ul>
     {#each tasks as task}
       <li>
-        <button on:click={() => switchLanguage(task)} class="category">{task.japanese} | {task.dutch}</button>
+        <button on:click={() => reserveItem(task)} class={task.reserved == true ? 'reserved' : 'available'} >{task.japanese} | {task.dutch}</button>
       </li>
     {/each}
   </ul>

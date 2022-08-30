@@ -35,6 +35,9 @@ var app = (function () {
     function is_empty(obj) {
         return Object.keys(obj).length === 0;
     }
+    function null_to_empty(value) {
+        return value == null ? '' : value;
+    }
     function append(target, node) {
         target.appendChild(node);
     }
@@ -398,7 +401,8 @@ var app = (function () {
       constructor(japanese="", dutch="") {
         this.active = japanese;
         this.japanese = japanese;
-        this.dutch = dutch; 
+        this.dutch = dutch;
+        this.reserved = false;
       }
 
       translate() {
@@ -469,7 +473,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (29:0) {:else}
+    // (39:0) {:else}
     function create_else_block(ctx) {
     	let ul;
     	let each_value = tasks;
@@ -488,8 +492,8 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			attr_dev(ul, "class", "svelte-rg0dox");
-    			add_location(ul, file$1, 29, 2, 470);
+    			attr_dev(ul, "class", "svelte-1dpj7na");
+    			add_location(ul, file$1, 39, 2, 642);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, ul, anchor);
@@ -499,7 +503,7 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*switchLanguage, tasks*/ 0) {
+    			if (dirty & /*tasks, reserveItem*/ 0) {
     				each_value = tasks;
     				validate_each_argument(each_value);
     				let i;
@@ -533,14 +537,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(29:0) {:else}",
+    		source: "(39:0) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (27:0) {#if tasks.length === 0}
+    // (37:0) {#if tasks.length === 0}
     function create_if_block(ctx) {
     	let p;
 
@@ -548,7 +552,7 @@ var app = (function () {
     		c: function create() {
     			p = element("p");
     			p.textContent = "This wish list is empty";
-    			add_location(p, file$1, 27, 2, 429);
+    			add_location(p, file$1, 37, 2, 601);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, p, anchor);
@@ -563,14 +567,14 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(27:0) {#if tasks.length === 0}",
+    		source: "(37:0) {#if tasks.length === 0}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (31:4) {#each tasks as task}
+    // (41:4) {#each tasks as task}
     function create_each_block(ctx) {
     	let li;
     	let button;
@@ -595,9 +599,13 @@ var app = (function () {
     			t1 = text(" | ");
     			t2 = text(t2_value);
     			t3 = space();
-    			attr_dev(button, "class", "category svelte-rg0dox");
-    			add_location(button, file$1, 32, 8, 520);
-    			add_location(li, file$1, 31, 6, 507);
+
+    			attr_dev(button, "class", "" + (null_to_empty(/*task*/ ctx[1].reserved == true
+    			? 'reserved'
+    			: 'available') + " svelte-1dpj7na"));
+
+    			add_location(button, file$1, 42, 8, 692);
+    			add_location(li, file$1, 41, 6, 679);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -626,7 +634,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(31:4) {#each tasks as task}",
+    		source: "(41:4) {#each tasks as task}",
     		ctx
     	});
 
@@ -682,6 +690,10 @@ var app = (function () {
     	task.translate();
     }
 
+    function reserveItem(task) {
+    	task.reserved = !task.reserved;
+    }
+
     function instance$1($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('TaskList', slots, []);
@@ -691,8 +703,8 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<TaskList> was created with unknown prop '${key}'`);
     	});
 
-    	const click_handler = task => switchLanguage(task);
-    	$$self.$capture_state = () => ({ Task, tasks, switchLanguage });
+    	const click_handler = task => reserveItem(task);
+    	$$self.$capture_state = () => ({ Task, tasks, switchLanguage, reserveItem });
     	return [click_handler];
     }
 

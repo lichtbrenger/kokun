@@ -1,11 +1,7 @@
 <script>
   import {Task} from './Task.js';
   import './ArrayExtensions.js';
-  let tasks = [
-    new Task("抱っこひも","babydraagzak"),
-    new Task("おくるみ","inbakeren"),
-    new Task("長肌着","lange onderbroek(wool?)"),
-  ];
+  import {tasks} from './Tasks.js'
 
   function switchLanguage(task){
     task.translate()
@@ -17,12 +13,12 @@
   ul {
     list-style: none;
   }
-  .description {
+  .category {
     background-color: #ffffff;
     min-width: 400px;
     border-radius: 12px;
   }
-  .description:hover {
+  .category:hover {
     background-color: #ed2939;
     color: white;
   }
@@ -34,7 +30,7 @@
   <ul>
     {#each tasks as task}
       <li>
-        <button on:click={() => switchLanguage(task)} class="description">{task.japanese} | {task.dutch}</button>
+        <button on:click={() => switchLanguage(task)} class="category">{task.japanese} | {task.dutch}</button>
       </li>
     {/each}
   </ul>

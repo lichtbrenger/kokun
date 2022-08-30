@@ -12,8 +12,7 @@
 
   function changeLanguage() {
     for (let i = 0; i < tasks.length; i++) {
-      tasks[i].translate();
-      console.log(tasks[i].active);
+      tasks[i].active = !tasks[i].active;
     }
 
     if (activeLanguage == "Nederlands") {
@@ -32,7 +31,8 @@
   }
   .available {
     background-color: #ffffff;
-    min-width: 400px;
+    width: 400px;
+    height: 50px;
     border-radius: 12px;
   }
   .available:hover {
@@ -47,14 +47,26 @@
   }
   
   .languageButton {
+    background-color: #ed2939;
+    color: white;
+    font-size: 30px;
+    width: 400px;
+    height: 100px;
+    margin: 10px;
+    border-radius: 12px;
+  }
+
+  .languageButton:hover {
+    background-color: #ffffff;
+    color: #000000;
   }
 </style>
 
 <ul>
+  <button on:click={() => changeLanguage()} class="languageButton">{activeLanguage}</button>
   {#each tasks as task}
     <li>
-      <button on:click={() => reserveItem(task)} class={task.reserved == true ? 'reserved' : 'available'} >{task.active}</button>
+      <button on:click={() => reserveItem(task)} class={task.reserved == true ? 'reserved' : 'available'} >{task.active == true ? task.japanese : task.dutch}</button>
     </li>
   {/each}
 </ul>
-<button on:click={() => changeLanguage()} class="languageButton">{activeLanguage}</button>

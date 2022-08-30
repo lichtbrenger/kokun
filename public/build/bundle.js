@@ -409,20 +409,12 @@ var app = (function () {
 
     class Task {
       constructor(japanese="", dutch="") {
-        this.active = japanese;
+        this.active = true;
         this.japanese = japanese;
         this.dutch = dutch;
         this.reserved = false;
       }
 
-      translate() {
-        if(this.active == this.japanese) {
-          this.active = this.dutch;
-        }
-        else {
-          this.active = this.japanese;
-        }
-      }
     }
 
     /**
@@ -481,22 +473,27 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[4] = list[i];
+    	child_ctx[5] = list[i];
     	return child_ctx;
     }
 
-    // (54:2) {#each tasks as task}
+    // (67:2) {#each tasks as task}
     function create_each_block(ctx) {
     	let li;
     	let button;
-    	let t0_value = /*task*/ ctx[4].active + "";
+
+    	let t0_value = (/*task*/ ctx[5].active == true
+    	? /*task*/ ctx[5].japanese
+    	: /*task*/ ctx[5].dutch) + "";
+
     	let t0;
+    	let button_class_value;
     	let t1;
     	let mounted;
     	let dispose;
 
-    	function click_handler() {
-    		return /*click_handler*/ ctx[2](/*task*/ ctx[4]);
+    	function click_handler_1() {
+    		return /*click_handler_1*/ ctx[4](/*task*/ ctx[5]);
     	}
 
     	const block = {
@@ -506,12 +503,12 @@ var app = (function () {
     			t0 = text(t0_value);
     			t1 = space();
 
-    			attr_dev(button, "class", "" + (null_to_empty(/*task*/ ctx[4].reserved == true
+    			attr_dev(button, "class", button_class_value = "" + (null_to_empty(/*task*/ ctx[5].reserved == true
     			? 'reserved'
-    			: 'available') + " svelte-aej4s0"));
+    			: 'available') + " svelte-1j8gag0"));
 
-    			add_location(button, file$1, 55, 6, 938);
-    			add_location(li, file$1, 54, 4, 927);
+    			add_location(button, file$1, 68, 6, 1255);
+    			add_location(li, file$1, 67, 4, 1244);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -520,12 +517,22 @@ var app = (function () {
     			append_dev(li, t1);
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", click_handler, false, false, false);
+    				dispose = listen_dev(button, "click", click_handler_1, false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
+
+    			if (dirty & /*tasks*/ 1 && t0_value !== (t0_value = (/*task*/ ctx[5].active == true
+    			? /*task*/ ctx[5].japanese
+    			: /*task*/ ctx[5].dutch) + "")) set_data_dev(t0, t0_value);
+
+    			if (dirty & /*tasks*/ 1 && button_class_value !== (button_class_value = "" + (null_to_empty(/*task*/ ctx[5].reserved == true
+    			? 'reserved'
+    			: 'available') + " svelte-1j8gag0"))) {
+    				attr_dev(button, "class", button_class_value);
+    			}
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(li);
@@ -538,7 +545,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(54:2) {#each tasks as task}",
+    		source: "(67:2) {#each tasks as task}",
     		ctx
     	});
 
@@ -547,12 +554,12 @@ var app = (function () {
 
     function create_fragment$1(ctx) {
     	let ul;
-    	let t0;
     	let button;
+    	let t0;
     	let t1;
     	let mounted;
     	let dispose;
-    	let each_value = tasks;
+    	let each_value = /*tasks*/ ctx[0];
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -563,41 +570,42 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			ul = element("ul");
+    			button = element("button");
+    			t0 = text(/*activeLanguage*/ ctx[1]);
+    			t1 = space();
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			t0 = space();
-    			button = element("button");
-    			t1 = text(/*activeLanguage*/ ctx[0]);
-    			attr_dev(ul, "class", "svelte-aej4s0");
-    			add_location(ul, file$1, 52, 0, 894);
-    			attr_dev(button, "class", "languageButton svelte-aej4s0");
-    			add_location(button, file$1, 59, 0, 1088);
+    			attr_dev(button, "class", "languageButton svelte-1j8gag0");
+    			add_location(button, file$1, 65, 2, 1125);
+    			attr_dev(ul, "class", "svelte-1j8gag0");
+    			add_location(ul, file$1, 64, 0, 1118);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, ul, anchor);
+    			append_dev(ul, button);
+    			append_dev(button, t0);
+    			append_dev(ul, t1);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].m(ul, null);
     			}
 
-    			insert_dev(target, t0, anchor);
-    			insert_dev(target, button, anchor);
-    			append_dev(button, t1);
-
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*click_handler_1*/ ctx[3], false, false, false);
+    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[3], false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*tasks, reserveItem*/ 0) {
-    				each_value = tasks;
+    			if (dirty & /*activeLanguage*/ 2) set_data_dev(t0, /*activeLanguage*/ ctx[1]);
+
+    			if (dirty & /*tasks, reserveItem*/ 1) {
+    				each_value = /*tasks*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
 
@@ -619,16 +627,12 @@ var app = (function () {
 
     				each_blocks.length = each_value.length;
     			}
-
-    			if (dirty & /*activeLanguage*/ 1) set_data_dev(t1, /*activeLanguage*/ ctx[0]);
     		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(ul);
     			destroy_each(each_blocks, detaching);
-    			if (detaching) detach_dev(t0);
-    			if (detaching) detach_dev(button);
     			mounted = false;
     			dispose();
     		}
@@ -657,14 +661,13 @@ var app = (function () {
 
     	function changeLanguage() {
     		for (let i = 0; i < tasks.length; i++) {
-    			tasks[i].translate();
-    			console.log(tasks[i].active);
+    			$$invalidate(0, tasks[i].active = !tasks[i].active, tasks);
     		}
 
     		if (activeLanguage == "Nederlands") {
-    			$$invalidate(0, activeLanguage = "日本語");
+    			$$invalidate(1, activeLanguage = "日本語");
     		} else {
-    			$$invalidate(0, activeLanguage = "Nederlands");
+    			$$invalidate(1, activeLanguage = "Nederlands");
     		}
     	}
 
@@ -674,8 +677,8 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<TaskList> was created with unknown prop '${key}'`);
     	});
 
-    	const click_handler = task => reserveItem(task);
-    	const click_handler_1 = () => changeLanguage();
+    	const click_handler = () => changeLanguage();
+    	const click_handler_1 = task => reserveItem(task);
 
     	$$self.$capture_state = () => ({
     		Task,
@@ -686,14 +689,14 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('activeLanguage' in $$props) $$invalidate(0, activeLanguage = $$props.activeLanguage);
+    		if ('activeLanguage' in $$props) $$invalidate(1, activeLanguage = $$props.activeLanguage);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [activeLanguage, changeLanguage, click_handler, click_handler_1];
+    	return [tasks, activeLanguage, changeLanguage, click_handler, click_handler_1];
     }
 
     class TaskList extends SvelteComponentDev {

@@ -4,10 +4,9 @@
   import {tasks} from './Tasks.js'
 
   let activeLanguage = "Nederlands";
+  let activeStyle = "available";
 
   function reserveItem(task) {
-    task.reserved = !task.reserved;
-    console.log(task.reserved);
   }
 
   function changeLanguage() {
@@ -66,7 +65,7 @@
   <button on:click={() => changeLanguage()} class="languageButton">{activeLanguage}</button>
   {#each tasks as task}
     <li>
-      <button on:click={() => reserveItem(task)} class={task.reserved == true ? 'reserved' : 'available'} >{task.active == true ? task.japanese : task.dutch}</button>
+      <button on:click={() => reserveItem(task)} class={task.reserved == true ? "reserved" : "available" } >{task.active == true ? task.japanese : task.dutch}</button>
     </li>
   {/each}
 </ul>

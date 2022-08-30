@@ -735,14 +735,14 @@ var app = (function () {
     			img = element("img");
     			t2 = space();
     			create_component(tasklist.$$.fragment);
-    			attr_dev(h1, "class", "svelte-eehlm3");
+    			attr_dev(h1, "class", "svelte-ptkukb");
     			add_location(h1, file, 6, 2, 91);
     			if (!src_url_equal(img.src, img_src_value = "images/roodborstje.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "background image");
     			add_location(img, file, 8, 4, 142);
-    			attr_dev(div, "class", "flexcontainer svelte-eehlm3");
+    			attr_dev(div, "class", "flexcontainer svelte-ptkukb");
     			add_location(div, file, 7, 2, 110);
-    			attr_dev(main, "class", "svelte-eehlm3");
+    			attr_dev(main, "class", "svelte-ptkukb");
     			add_location(main, file, 5, 0, 82);
     		},
     		l: function claim(nodes) {

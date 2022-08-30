@@ -22,13 +22,14 @@
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
+    background-image: url('./images/hikari.png');
 	}
 
 	h1 {
 		color: #ed2939;
 		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
+		font-size: 5em;
+		font-weight: 200;
 	}
 
 	@media (min-width: 640px) {

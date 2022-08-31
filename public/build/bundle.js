@@ -465,18 +465,19 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[6] = list[i];
+    	child_ctx[7] = list[i];
+    	child_ctx[9] = i;
     	return child_ctx;
     }
 
-    // (66:2) {#each tasks as task}
+    // (75:2) {#each tasks as task,index}
     function create_each_block(ctx) {
     	let li;
     	let button;
 
-    	let t0_value = (/*task*/ ctx[6].active == true
-    	? /*task*/ ctx[6].japanese
-    	: /*task*/ ctx[6].dutch) + "";
+    	let t0_value = (/*task*/ ctx[7].active == true
+    	? /*task*/ ctx[7].japanese
+    	: /*task*/ ctx[7].dutch) + "";
 
     	let t0;
     	let button_class_value;
@@ -485,7 +486,7 @@ var app = (function () {
     	let dispose;
 
     	function click_handler_1() {
-    		return /*click_handler_1*/ ctx[4](/*task*/ ctx[6]);
+    		return /*click_handler_1*/ ctx[6](/*index*/ ctx[9]);
     	}
 
     	const block = {
@@ -494,13 +495,9 @@ var app = (function () {
     			button = element("button");
     			t0 = text(t0_value);
     			t1 = space();
-
-    			attr_dev(button, "class", button_class_value = "" + (null_to_empty(/*task*/ ctx[6].reserved == true
-    			? "reserved"
-    			: "available") + " svelte-1j8gag0"));
-
-    			add_location(button, file$1, 67, 6, 1220);
-    			add_location(li, file$1, 66, 4, 1209);
+    			attr_dev(button, "class", button_class_value = "" + (null_to_empty(/*activeStyle*/ ctx[2][/*index*/ ctx[9]]) + " svelte-1j8gag0"));
+    			add_location(button, file$1, 76, 6, 1446);
+    			add_location(li, file$1, 75, 4, 1435);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -516,13 +513,11 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
 
-    			if (dirty & /*tasks*/ 1 && t0_value !== (t0_value = (/*task*/ ctx[6].active == true
-    			? /*task*/ ctx[6].japanese
-    			: /*task*/ ctx[6].dutch) + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*tasks*/ 1 && t0_value !== (t0_value = (/*task*/ ctx[7].active == true
+    			? /*task*/ ctx[7].japanese
+    			: /*task*/ ctx[7].dutch) + "")) set_data_dev(t0, t0_value);
 
-    			if (dirty & /*tasks*/ 1 && button_class_value !== (button_class_value = "" + (null_to_empty(/*task*/ ctx[6].reserved == true
-    			? "reserved"
-    			: "available") + " svelte-1j8gag0"))) {
+    			if (dirty & /*activeStyle*/ 4 && button_class_value !== (button_class_value = "" + (null_to_empty(/*activeStyle*/ ctx[2][/*index*/ ctx[9]]) + " svelte-1j8gag0"))) {
     				attr_dev(button, "class", button_class_value);
     			}
     		},
@@ -537,7 +532,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(66:2) {#each tasks as task}",
+    		source: "(75:2) {#each tasks as task,index}",
     		ctx
     	});
 
@@ -571,9 +566,9 @@ var app = (function () {
     			}
 
     			attr_dev(button, "class", "languageButton svelte-1j8gag0");
-    			add_location(button, file$1, 64, 2, 1090);
+    			add_location(button, file$1, 73, 2, 1310);
     			attr_dev(ul, "class", "svelte-1j8gag0");
-    			add_location(ul, file$1, 63, 0, 1083);
+    			add_location(ul, file$1, 72, 0, 1303);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -589,14 +584,14 @@ var app = (function () {
     			}
 
     			if (!mounted) {
-    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[3], false, false, false);
+    				dispose = listen_dev(button, "click", /*click_handler*/ ctx[5], false, false, false);
     				mounted = true;
     			}
     		},
     		p: function update(ctx, [dirty]) {
     			if (dirty & /*activeLanguage*/ 2) set_data_dev(t0, /*activeLanguage*/ ctx[1]);
 
-    			if (dirty & /*tasks, reserveItem*/ 1) {
+    			if (dirty & /*activeStyle, reserveItem, tasks*/ 13) {
     				each_value = /*tasks*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
@@ -641,15 +636,23 @@ var app = (function () {
     	return block;
     }
 
-    function reserveItem(task) {
-    	
-    }
-
     function instance$1($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('TaskList', slots, []);
     	let activeLanguage = "Nederlands";
-    	let activeStyle = "available";
+    	let activeStyle = [];
+
+    	for (let i = 0; i < tasks.length; i++) {
+    		activeStyle.push("available");
+    	}
+
+    	function reserveItem(index) {
+    		if (activeStyle[index] == "reserved") {
+    			$$invalidate(2, activeStyle[index] = "available", activeStyle);
+    		} else {
+    			$$invalidate(2, activeStyle[index] = "reserved", activeStyle);
+    		}
+    	}
 
     	function changeLanguage() {
     		for (let i = 0; i < tasks.length; i++) {
@@ -670,7 +673,7 @@ var app = (function () {
     	});
 
     	const click_handler = () => changeLanguage();
-    	const click_handler_1 = task => reserveItem();
+    	const click_handler_1 = index => reserveItem(index);
 
     	$$self.$capture_state = () => ({
     		Task,
@@ -683,14 +686,22 @@ var app = (function () {
 
     	$$self.$inject_state = $$props => {
     		if ('activeLanguage' in $$props) $$invalidate(1, activeLanguage = $$props.activeLanguage);
-    		if ('activeStyle' in $$props) activeStyle = $$props.activeStyle;
+    		if ('activeStyle' in $$props) $$invalidate(2, activeStyle = $$props.activeStyle);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [tasks, activeLanguage, changeLanguage, click_handler, click_handler_1];
+    	return [
+    		tasks,
+    		activeLanguage,
+    		activeStyle,
+    		reserveItem,
+    		changeLanguage,
+    		click_handler,
+    		click_handler_1
+    	];
     }
 
     class TaskList extends SvelteComponentDev {

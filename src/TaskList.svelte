@@ -4,9 +4,18 @@
   import {tasks} from './Tasks.js'
 
   let activeLanguage = "Nederlands";
-  let activeStyle = "available";
+  let activeStyle = [];
+  for (let i = 0; i < tasks.length; i++) {
+    activeStyle.push("available");
+  }
 
-  function reserveItem(task) {
+  function reserveItem(index) {
+    if (activeStyle[index] == "reserved") {
+      activeStyle[index] = "available";
+    }
+    else {
+      activeStyle[index] = "reserved";
+    }
   }
 
   function changeLanguage() {
@@ -63,9 +72,9 @@
 
 <ul>
   <button on:click={() => changeLanguage()} class="languageButton">{activeLanguage}</button>
-  {#each tasks as task}
+  {#each tasks as task,index}
     <li>
-      <button on:click={() => reserveItem(task)} class={task.reserved == true ? "reserved" : "available" } >{task.active == true ? task.japanese : task.dutch}</button>
+      <button on:click={() => reserveItem(index)} class={activeStyle[index]} >{task.active == true ? task.japanese : task.dutch}</button>
     </li>
   {/each}
 </ul>

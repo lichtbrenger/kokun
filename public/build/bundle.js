@@ -470,7 +470,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (75:2) {#each tasks as task,index}
+    // (77:2) {#each tasks as task,index}
     function create_each_block(ctx) {
     	let li;
     	let button;
@@ -495,9 +495,9 @@ var app = (function () {
     			button = element("button");
     			t0 = text(t0_value);
     			t1 = space();
-    			attr_dev(button, "class", button_class_value = "" + (null_to_empty(/*activeStyle*/ ctx[2][/*index*/ ctx[9]]) + " svelte-1j8gag0"));
-    			add_location(button, file$1, 76, 6, 1446);
-    			add_location(li, file$1, 75, 4, 1435);
+    			attr_dev(button, "class", button_class_value = "" + (null_to_empty(/*activeStyle*/ ctx[2][/*index*/ ctx[9]]) + " svelte-croxwf"));
+    			add_location(button, file$1, 78, 6, 1478);
+    			add_location(li, file$1, 77, 4, 1467);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -517,7 +517,7 @@ var app = (function () {
     			? /*task*/ ctx[7].japanese
     			: /*task*/ ctx[7].dutch) + "")) set_data_dev(t0, t0_value);
 
-    			if (dirty & /*activeStyle*/ 4 && button_class_value !== (button_class_value = "" + (null_to_empty(/*activeStyle*/ ctx[2][/*index*/ ctx[9]]) + " svelte-1j8gag0"))) {
+    			if (dirty & /*activeStyle*/ 4 && button_class_value !== (button_class_value = "" + (null_to_empty(/*activeStyle*/ ctx[2][/*index*/ ctx[9]]) + " svelte-croxwf"))) {
     				attr_dev(button, "class", button_class_value);
     			}
     		},
@@ -532,7 +532,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(75:2) {#each tasks as task,index}",
+    		source: "(77:2) {#each tasks as task,index}",
     		ctx
     	});
 
@@ -565,10 +565,10 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			attr_dev(button, "class", "languageButton svelte-1j8gag0");
-    			add_location(button, file$1, 73, 2, 1310);
-    			attr_dev(ul, "class", "svelte-1j8gag0");
-    			add_location(ul, file$1, 72, 0, 1303);
+    			attr_dev(button, "class", "languageButton svelte-croxwf");
+    			add_location(button, file$1, 75, 2, 1342);
+    			attr_dev(ul, "class", "svelte-croxwf");
+    			add_location(ul, file$1, 74, 0, 1335);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

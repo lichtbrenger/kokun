@@ -49,9 +49,11 @@
   }
 
   .reserved {
-    background-color: #009911;
-    min-width: 400px;
-    border-radius: 12px;
+    background-color: #ed2939;
+    color: white;
+    width: 400px;
+    height: 50px;
+    border-radius: 70px;
   }
   
   .languageButton {
@@ -74,7 +76,7 @@
   <button on:click={() => changeLanguage()} class="languageButton">{activeLanguage}</button>
   {#each tasks as task,index}
     <li>
-      <button on:click={() => reserveItem(index)} class={activeStyle[index]} >{task.active == true ? task.japanese : task.dutch}</button>
+      <button on:click={() => reserveItem(index)} class={activeStyle[index]}>{task.active == true ? task.japanese : task.dutch}</button>
     </li>
   {/each}
 </ul>
